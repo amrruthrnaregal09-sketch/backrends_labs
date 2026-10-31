@@ -1,0 +1,65 @@
+
+### 1. GET all books
+$ curl http://localhost:3111/books/
+[{"id":1,"title":"The Alchemist","author":"Paulo Coelho","price":299,"pages":208},{"id":2,"title":"Wings of Fire","author":"A. P. J. Abdul Kalam","price":350,"pages":180},{"id":3,"title":"The Guide","author":"R. K. Narayan","price":275,"pages":220},{"id":4,"title":"Malgudi Days","author":"R. K. Narayan","price":250,"pages":256},{"id":5,"title":"Godan","author":"Munshi Premchand","price":199,"pages":336},{"id":6,"title":"The God of Small Things","author":"Arundhati Roy","price":399,"pages":340},{"id":7,"title":"Train to Pakistan","author":"Khushwant Singh","price":225,"pages":181},{"id":8,"title":"A Suitable Boy","author":"Vikram Seth","price":799,"pages":1349},{"id":9,"title":"Midnight's Children","author":"Salman Rushdie","price":450,"pages":647},{"id":10,"title":"The White Tiger","author":"Aravind Adiga","price":320,"pages":321}]
+HTTP 200
+
+### 2. GET one book (id 3)
+$ curl http://localhost:3111/books/3/
+{"id":3,"title":"The Guide","author":"R. K. Narayan","price":275,"pages":220}
+HTTP 200
+
+### 3. GET book that does not exist
+$ curl http://localhost:3111/books/999/
+{"error":"Book not found"}
+HTTP 404
+
+### 4. GET invalid id (SQL injection attempt)
+$ curl http://localhost:3111/books/1%20OR%201=1/
+{"error":"Invalid book id"}
+HTTP 400
+
+### 5. POST add a book
+$ curl -X POST http://localhost:3111/books/ -H Content-Type: application/json -d {"title":"Gitanjali","author":"Rabindranath Tagore","price":180,"pages":120}
+{"bookId":11}
+HTTP 201
+
+### 6. POST with missing title (validation)
+$ curl -X POST http://localhost:3111/books/ -H Content-Type: application/json -d {"author":"X","price":10,"pages":5}
+{"error":"title must be a non-empty string"}
+HTTP 400
+
+### 7. POST with SQL text in title (stored safely as plain text)
+$ curl -X POST http://localhost:3111/books/ -H Content-Type: application/json -d {"title":"x'); DROP TABLE book;--","author":"Tester","price":1,"pages":1}
+{"bookId":12}
+HTTP 201
+
+### 8. PUT update book 11
+$ curl -X PUT http://localhost:3111/books/11/ -H Content-Type: application/json -d {"title":"Gitanjali (Song Offerings)","author":"Rabindranath Tagore","price":210,"pages":128}
+{"message":"Book updated successfully"}
+HTTP 200
+
+### 9. GET book 11 after update
+$ curl http://localhost:3111/books/11/
+{"id":11,"title":"Gitanjali (Song Offerings)","author":"Rabindranath Tagore","price":210,"pages":128}
+HTTP 200
+
+### 10. PUT on book that does not exist
+$ curl -X PUT http://localhost:3111/books/999/ -H Content-Type: application/json -d {"title":"A","author":"B","price":1,"pages":1}
+{"error":"Book not found"}
+HTTP 404
+
+### 11. DELETE book 11
+$ curl -X DELETE http://localhost:3111/books/11/
+{"message":"Book deleted successfully"}
+HTTP 200
+
+### 12. DELETE book 11 again
+$ curl -X DELETE http://localhost:3111/books/11/
+{"error":"Book not found"}
+HTTP 404
+
+### 13. GET all books (table still exists, injection text row present)
+$ curl http://localhost:3111/books/
+[{"id":1,"title":"The Alchemist","author":"Paulo Coelho","price":299,"pages":208},{"id":2,"title":"Wings of Fire","author":"A. P. J. Abdul Kalam","price":350,"pages":180},{"id":3,"title":"The Guide","author":"R. K. Narayan","price":275,"pages":220},{"id":4,"title":"Malgudi Days","author":"R. K. Narayan","price":250,"pages":256},{"id":5,"title":"Godan","author":"Munshi Premchand","price":199,"pages":336},{"id":6,"title":"The God of Small Things","author":"Arundhati Roy","price":399,"pages":340},{"id":7,"title":"Train to Pakistan","author":"Khushwant Singh","price":225,"pages":181},{"id":8,"title":"A Suitable Boy","author":"Vikram Seth","price":799,"pages":1349},{"id":9,"title":"Midnight's Children","author":"Salman Rushdie","price":450,"pages":647},{"id":10,"title":"The White Tiger","author":"Aravind Adiga","price":320,"pages":321},{"id":12,"title":"x'); DROP TABLE book;--","author":"Tester","price":1,"pages":1}]
+HTTP 200

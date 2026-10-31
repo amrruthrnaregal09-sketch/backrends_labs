@@ -1,0 +1,33 @@
+### Import into Postman / VS Code REST Client. Change the host if deployed.
+@host = http://localhost:3000
+
+### 1. Get all books
+GET {{host}}/books/
+
+### 2. Get one book
+GET {{host}}/books/3/
+
+### 3. Add a book
+POST {{host}}/books/
+Content-Type: application/json
+
+{
+  "title": "Gitanjali",
+  "author": "Rabindranath Tagore",
+  "price": 180,
+  "pages": 120
+}
+
+### 4. Update a book
+PUT {{host}}/books/11/
+Content-Type: application/json
+
+{
+  "title": "Gitanjali (Song Offerings)",
+  "author": "Rabindranath Tagore",
+  "price": 210,
+  "pages": 128
+}
+
+### 5. Delete a book
+DELETE {{host}}/books/11/

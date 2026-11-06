@@ -6,7 +6,9 @@
 **Course:** Backend Development Fundamentals · Year II Term II
 
 ## Live link
-Not deployed yet. Run locally using the steps below.
+[https://backrends-labs-3.onrender.com](https://backrends-labs-3.onrender.com)
+
+Books API: [https://backrends-labs-3.onrender.com/books](https://backrends-labs-3.onrender.com/books)
 
 ## How to run
 

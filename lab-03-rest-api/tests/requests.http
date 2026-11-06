@@ -1,0 +1,59 @@
+### List all books
+GET http://localhost:3000/books
+
+### Search, sort, paginate and filter by price
+GET http://localhost:3000/books?search_q=the&order_by=price&order=DESC&limit=5&offset=0&min_price=100&max_price=500
+
+### Invalid sort column (expect 400)
+GET http://localhost:3000/books?order_by=password
+
+### Invalid limit (expect 400)
+GET http://localhost:3000/books?limit=0
+
+### Get a book (change ID if needed)
+GET http://localhost:3000/books/1
+
+### Missing book (expect 404)
+GET http://localhost:3000/books/99999
+
+### Create a book (expect 201)
+POST http://localhost:3000/books
+Content-Type: application/json
+
+{
+  "title": "Sample Book",
+  "author": "Sample Author",
+  "price": 299
+}
+
+### Invalid create: missing title (expect 400)
+POST http://localhost:3000/books
+Content-Type: application/json
+
+{
+  "author": "Sample Author",
+  "price": 299
+}
+
+### Invalid create: non-numeric price (expect 400)
+POST http://localhost:3000/books
+Content-Type: application/json
+
+{
+  "title": "Bad Price",
+  "author": "Sample Author",
+  "price": "abc"
+}
+
+### Update book (change ID if needed; expect 200)
+PUT http://localhost:3000/books/1
+Content-Type: application/json
+
+{
+  "title": "Updated Book",
+  "author": "Updated Author",
+  "price": 350
+}
+
+### Delete book (change ID if needed; expect 200)
+DELETE http://localhost:3000/books/1

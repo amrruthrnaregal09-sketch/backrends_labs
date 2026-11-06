@@ -1,0 +1,16 @@
+Run the server first: npm start
+
+# List books
+curl http://localhost:3000/books
+
+# Search and filter
+curl "http://localhost:3000/books?search_q=the&order_by=price&order=DESC&limit=5&offset=0&min_price=100&max_price=500"
+
+# Create
+curl -X POST http://localhost:3000/books -H "Content-Type: application/json" -d "{\"title\":\"Sample Book\",\"author\":\"Sample Author\",\"price\":299}"
+
+# Invalid input (expect HTTP 400)
+curl -i -X POST http://localhost:3000/books -H "Content-Type: application/json" -d "{\"author\":\"Sample Author\",\"price\":\"abc\"}"
+
+# Missing ID (expect HTTP 404)
+curl -i http://localhost:3000/books/99999

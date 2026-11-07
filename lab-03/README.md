@@ -56,8 +56,20 @@ Import or copy the requests from `tests/requests.http`. Test both valid and inva
 
 ## Screenshots
 
-Save your own Postman screenshots in this folder and add them here. Do not submit placeholder screenshots as proof of a working server.
+Postman screenshots of the API responses:
 
+- [GET all books](screenshots/01-get-all-books.png)
+- [Search books](screenshots/02-search-books.png)
+- [Sort books by price](screenshots/03-sort-by-price.png)
+- [Paginate books](screenshots/04-pagination.png)
+- [Filter by price range](screenshots/05-price-range.png)
+- [Get a book by ID](screenshots/06-get-book-by-id.png)
+- [Additional GET all books response](screenshots/07-get-all-books.png)
+- [Validation error](screenshots/08-validation-error.png)
+- [Delete a book](screenshots/09-delete-book.png)
+- [Additional GET all books response](screenshots/10-get-all-books.png)
+
+The screenshots show requests and responses made against the local server at `http://localhost:3000`.
 ## Debugging notes
 
 - `EADDRINUSE`: another process is using the port. Stop that process or run the app on another port.
